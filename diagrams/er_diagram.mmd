@@ -1,13 +1,26 @@
 ---
-title: Diagrama Entidad-Relación
+title: ER diagram
 ---
 erDiagram
     TODO {
-        string title
-        string description
+        string id PK "required"
+        string user FK "required"
+        string title "required"
+        string description "optional"
+        date deadline "optional"
+        string state FK "required"
+        boolean urgent "required"
+        boolean important "required"
     }
     USER ||--o{ TODO : owns
     USER {
-        string id 
-        string name
+        string id PK "required"
+        string password "required"
+        string name "required"
+        string surname "required"
+    }
+    TODO }o--|| STATE : "has the state"
+    STATE {
+        string id PK "required"
+        string enum_value "required"
     }
