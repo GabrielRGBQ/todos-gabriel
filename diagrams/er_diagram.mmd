@@ -1,0 +1,13 @@
+---
+title: Diagrama Entidad-Relación
+---
+erDiagram
+    TODO {
+        string title
+        string description
+    }
+    USER ||--o{ TODO : owns
+    USER {
+        string id 
+        string name
+    }
