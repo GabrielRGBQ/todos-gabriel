@@ -1,0 +1,26 @@
+---
+title: Class diagram
+---
+classDiagram
+    User "1"--"0..n"TODO : owns
+    class User{
+        -str id
+        -str password
+        -str name
+        -str surname
+    }
+    class TODO{
+        -str id
+        -str user
+        -str title
+        -str description
+        -date deadline
+        -STATE state
+        -Boolean urgent
+        -Boolean important
+    }
+    class STATE{
+        +str TO_BE_DONE
+        +str DONE
+    }
+    <<Enumeartion>> STATE
