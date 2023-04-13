@@ -1,2 +1,2 @@
-Este es un proyecto que desarrollo con el objetivo de poner en práctica todo
-lo que he estado aprendiendo sobre Python, Flask, APIs, etc.
+This is a project that I am developing with the goal of putting into practice
+all what I have been learning about Python, Flask, APIs, testing, etc.
