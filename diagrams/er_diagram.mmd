@@ -1,0 +1,26 @@
+---
+title: ER diagram
+---
+erDiagram
+    TODOS {
+        string id PK "required"
+        string user FK "required"
+        string title "required"
+        string description "optional"
+        date deadline "optional"
+        string state FK "required"
+        boolean urgent "required"
+        boolean important "required"
+    }
+    USERS ||--o{ TODOS : owns
+    USERS {
+        string id PK "required"
+        string password "required"
+        string name "required"
+        string surname "required"
+    }
+    TODOS }o--|| STATES : "has the state"
+    STATES {
+        string id PK "required"
+        string enum_value "required"
+    }
