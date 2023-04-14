@@ -1,38 +1,35 @@
-import json
-import os
-
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
+from sqlalchemy.orm import Session
+
+from . import crud, models, schemas
+from .database import SessionLocal, engine
+
+models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-# PROVISIONAL HANDLING OF THE "FAKE" DATABASE
-# TODO: make sure the name is correct and where in the project locate it.
-# I guess that it should be ignored by git.
-TODOs_FILE = "todos.json"
-TODOs_DATABASE = []
 
-if os.path.exists(TODOs_FILE):
-    with open(TODOs_FILE, "r") as f:
-        TODOs_DATABASE = json.load(f)
+# Dependency
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
-# /
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
 
 
-# /list-todos
-@app.get("/list-todos")
-def list_books():
-    return {"todos": TODOs_DATABASE}
+@app.post("/users/", response_model=schemas.User)
+def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
+    return crud.create_user(db=db, user=user)
 
-# /add-todo
-@app.post("/add-todo")
-def add_book(title, description):
-    todo = {"title": title, "description": description}
-    json_book = jsonable_encoder(todo)
-    TODOs_DATABASE.append(json_book)
-    with open(TODOs_FILE, "w") as f:
-        json.dump(TODOs_DATABASE, f)
-    return {"message": f"TODO {title} was added.", "description": description}
+
+@app.get("/users/", response_model=list[schemas.User])
+def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+    users = crud.get_users(db, skip=skip, limit=limit)
+    return users

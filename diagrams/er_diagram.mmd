@@ -2,7 +2,7 @@
 title: ER diagram
 ---
 erDiagram
-    TODO {
+    TODOS {
         string id PK "required"
         string user FK "required"
         string title "required"
@@ -12,15 +12,15 @@ erDiagram
         boolean urgent "required"
         boolean important "required"
     }
-    USER ||--o{ TODO : owns
-    USER {
+    USERS ||--o{ TODOS : owns
+    USERS {
         string id PK "required"
         string password "required"
         string name "required"
         string surname "required"
     }
-    TODO }o--|| STATE : "has the state"
-    STATE {
+    TODOS }o--|| STATES : "has the state"
+    STATES {
         string id PK "required"
         string enum_value "required"
     }
